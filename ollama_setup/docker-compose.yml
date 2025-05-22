@@ -1,0 +1,19 @@
+services:
+  ollama-0:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    command: "serve"
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            # count: all
+            device_ids: ['0', '1']
+            capabilities: [gpu]
+    volumes:
+      - ollama:/root/.ollama
+      - <path_to_model_on_machine>:<path_to_mount_modelfile_in_container>:ro
+volumes:
+  ollama:
