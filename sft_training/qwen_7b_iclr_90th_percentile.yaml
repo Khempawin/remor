@@ -1,0 +1,48 @@
+### model
+model_name_or_path: deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
+  #quantization_bit: 4  # choices: [8 (bnb/hqq/eetq), 4 (bnb/hqq), 3 (hqq), 2 (hqq)]
+  #quantization_method: bnb  # choices: [bnb, hqq, eetq]
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 8
+lora_target: all
+deepspeed: examples/deepspeed/ds_z3_offload_config.json
+
+### dataset
+dataset: iclr_2017_2020_peer_review_with_thinking_trace_90th
+template: deepseek3
+cutoff_len: 32768
+  #max_samples: 1000
+overwrite_cache: true
+preprocessing_num_workers: 32
+dataloader_num_workers: 4
+
+### output
+output_dir: saves/Qwen-7B-Review-ICLR-90th/lora/sft
+logging_steps: 10
+save_steps: 300
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 4
+learning_rate: 1.0e-4
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
+resume_from_checkpoint: null
+
+### eval
+# eval_dataset: alpaca_en_demo
+# val_size: 0.1
+# per_device_eval_batch_size: 1
+# eval_strategy: steps
+# eval_steps: 500
