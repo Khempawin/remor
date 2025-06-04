@@ -1,6 +1,6 @@
 # Setup Ollama
 ## Adding Modelfile to configure context window for prompt
-Copy "Modelfile" to the directory of the saved mode on machine.
+Copy "Modelfile" to the directory of the saved model on machine.
 
 ## Starting Ollama application as a container
 Run the following command to start the ollama container:
